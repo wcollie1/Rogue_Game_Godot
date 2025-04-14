@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bnl4iu0gkfccb"
+path="res://.godot/imported/Fireball Impacts  Free Sound Effect.mp3-36f58fc5d0f4c525fbc943bfe03efe60.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/Fireball Impacts  Free Sound Effect.mp3"
+dest_files=["res://.godot/imported/Fireball Impacts  Free Sound Effect.mp3-36f58fc5d0f4c525fbc943bfe03efe60.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
