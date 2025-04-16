@@ -1,99 +1,96 @@
-[gd_scene load_steps=31 format=3 uid="uid://bd8pvqkve8nlr"]
+[gd_scene load_steps=30 format=3 uid="uid://cxtxg0rjgweak"]
 
-[ext_resource type="Texture2D" uid="uid://ddvxj7kbdkg52" path="res://assets/background/texture/TX Tileset Grass.png" id="2_51p13"]
-[ext_resource type="Script" uid="uid://b0fj6qm1rs7xj" path="res://scripts/Sprite2d.cs" id="2_mehiu"]
-[ext_resource type="AudioStream" uid="uid://ctmyb82yx2hos" path="res://assets/sound/Steel on Steel.mp3" id="2_q2pai"]
-[ext_resource type="Texture2D" uid="uid://doch6pmvqkf43" path="res://assets/wizard/Attack1.png" id="3_51p13"]
-[ext_resource type="Texture2D" uid="uid://byqc4djye0tli" path="res://assets/wizard/Idle.png" id="3_lt4yx"]
-[ext_resource type="Texture2D" uid="uid://bwk86lgoi1867" path="res://assets/wizard/Run.png" id="5_lk3y4"]
-[ext_resource type="AudioStream" uid="uid://bnl4iu0gkfccb" path="res://assets/sound/Fireball Impacts  Free Sound Effect.mp3" id="7_w12x5"]
+[ext_resource type="Script" uid="uid://b0fj6qm1rs7xj" path="res://scripts/Sprite2d.cs" id="1_mdl7e"]
+[ext_resource type="Texture2D" uid="uid://doch6pmvqkf43" path="res://assets/wizard/Attack1.png" id="2_qu4a1"]
+[ext_resource type="Texture2D" uid="uid://byqc4djye0tli" path="res://assets/wizard/Idle.png" id="3_70d11"]
+[ext_resource type="Texture2D" uid="uid://bwk86lgoi1867" path="res://assets/wizard/Run.png" id="4_cw2d6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dbwip"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(0, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gcgl3"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(231, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uf50f"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(462, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5evc2"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(693, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqeq5"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(924, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f166j"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(1155, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hltx7"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(1386, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_shsg8"]
-atlas = ExtResource("3_51p13")
+atlas = ExtResource("2_qu4a1")
 region = Rect2(1617, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1wwn"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(0, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_51p13"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(231, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lk3y4"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(462, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q2pai"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(693, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w12x5"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(924, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ysd0p"]
-atlas = ExtResource("3_lt4yx")
+atlas = ExtResource("3_70d11")
 region = Rect2(1155, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ikdaa"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(0, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7144"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(231, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_75u5r"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(462, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_st8jt"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(693, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7wq1"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(924, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3ymp8"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(1155, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0a62h"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(1386, 0, 231, 190)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_teref"]
-atlas = ExtResource("5_lk3y4")
+atlas = ExtResource("4_cw2d6")
 region = Rect2(1617, 0, 231, 190)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dbwip"]
@@ -180,28 +177,33 @@ animations = [{
 "speed": 11.0
 }]
 
-[node name="Sprite2D" type="Sprite2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
+radius = 17.0294
 
-[node name="Background" type="Sprite2D" parent="."]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqtel"]
+radius = 17.0
+height = 74.0
 
-[node name="TxTilesetGrass" type="Sprite2D" parent="Background"]
-position = Vector2(576.625, 324)
-scale = Vector2(4.49707, 2.51563)
-texture = ExtResource("2_51p13")
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_mdl7e")
 
-[node name="Backgroud Music" type="AudioStreamPlayer" parent="Background/TxTilesetGrass"]
-stream = ExtResource("2_q2pai")
-autoplay = true
-
-[node name="Player" type="Node2D" parent="."]
-script = ExtResource("2_mehiu")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-position = Vector2(552, 295)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(12, -51)
 scale = Vector2(1.24301, 1.08203)
 sprite_frames = SubResource("SpriteFrames_dbwip")
 animation = &"idle"
 
-[node name="AttackSound" type="AudioStreamPlayer" parent="Player"]
-stream = ExtResource("7_w12x5")
-volume_db = 1.93
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -58)
+shape = SubResource("CircleShape2D_mdl7e")
+
+[node name="DetectionArea" type="Area2D" parent="." groups=["Player"]]
+visible = false
+position = Vector2(0, -37)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+visible = false
+position = Vector2(2, -3)
+shape = SubResource("CapsuleShape2D_hqtel")
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]

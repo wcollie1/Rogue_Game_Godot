@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd8pvqkve8nlr"]
+
+[ext_resource type="Texture2D" uid="uid://ddvxj7kbdkg52" path="res://assets/background/texture/TX Tileset Grass.png" id="2_51p13"]
+[ext_resource type="AudioStream" uid="uid://ctmyb82yx2hos" path="res://assets/sound/Steel on Steel.mp3" id="2_q2pai"]
+[ext_resource type="PackedScene" uid="uid://cxtxg0rjgweak" path="res://scenes/Player.tscn" id="4_i1wwn"]
+[ext_resource type="PackedScene" uid="uid://x5756b3jb84o" path="res://scenes/Goblin.tscn" id="5_51p13"]
+
+[node name="Sprite2D" type="Sprite2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="TxTilesetGrass" type="Sprite2D" parent="Background"]
+position = Vector2(576.625, 324)
+scale = Vector2(4.49707, 2.51563)
+texture = ExtResource("2_51p13")
+
+[node name="Backgroud Music" type="AudioStreamPlayer" parent="Background/TxTilesetGrass"]
+stream = ExtResource("2_q2pai")
+volume_db = -25.743
+autoplay = true
+
+[node name="Player" parent="." instance=ExtResource("4_i1wwn")]
+position = Vector2(475, 275)
+
+[node name="Goblin - Devin" parent="." instance=ExtResource("5_51p13")]
+position = Vector2(354, 273)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Devin"]
+offset_left = -17.0
+offset_top = -86.0
+offset_right = 23.0
+offset_bottom = -46.0
+text = "𝔇𝔢𝔳𝔦𝔫"
+
+[node name="Goblin - Jared" parent="." instance=ExtResource("5_51p13")]
+position = Vector2(222, 191)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Jared"]
+offset_left = -14.0
+offset_top = -86.0
+offset_right = 26.0
+offset_bottom = -46.0
+text = "𝔍𝔞𝔯𝔢𝔡"
