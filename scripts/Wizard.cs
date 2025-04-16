@@ -1,50 +1,50 @@
 using Godot;
 using System;
 
-public partial class Sprite2d : CharacterBody2D
+public partial class Wizard : CharacterBody2D
 {
+	[Export]
+	public PackedScene DarkMagicScene;
+
 	private AnimatedSprite2D animatedSprite;
 	private bool isAttacking = false;
-
-	// Update this path to match your actual scene hierarchy!
-	private const string ANIMATION_PATH = "AnimatedSprite2D";  // Change to "Graphics/AnimatedSprite2D" if needed
+	private Vector2 queuedSpellPosition = Vector2.Zero;
 
 	public override void _Ready()
 	{
-		animatedSprite = GetNodeOrNull<AnimatedSprite2D>(ANIMATION_PATH);
+		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
 		if (animatedSprite == null)
 		{
-			GD.PrintErr($"❌ Could not find AnimatedSprite2D at path: '{ANIMATION_PATH}'");
+			GD.PrintErr("❌ AnimatedSprite2D not found!");
 			return;
 		}
 
 		animatedSprite.AnimationFinished += OnAnimationFinished;
 	}
 
-	private void OnAnimationFinished()
-	{
-		if (animatedSprite.Animation == "attack")
-		{
-			isAttacking = false;
-			animatedSprite.Play("idle");
-		}
-	}
-
 	public override void _Process(double delta)
 	{
 		if (animatedSprite == null)
-			return; // Avoid null errors
+			return;
 
+		// Cast spell if space (attack) is pressed
 		if (!isAttacking && Input.IsActionJustPressed("attack"))
 		{
 			isAttacking = true;
 			animatedSprite.Play("attack");
+
+			// Lock in the cursor position now
+			queuedSpellPosition = GetGlobalMousePosition();
+
 			return;
 		}
 
+		// Prevent moving or casting while attacking
 		if (isAttacking)
 			return;
 
+		// Movement input
 		Vector2 direction = Vector2.Zero;
 		float speed = 250;
 
@@ -65,6 +65,29 @@ public partial class Sprite2d : CharacterBody2D
 		{
 			if (animatedSprite.Animation != "idle")
 				animatedSprite.Play("idle");
+		}
+	}
+
+	private void OnAnimationFinished()
+	{
+		if (animatedSprite.Animation == "attack")
+		{
+			isAttacking = false;
+			animatedSprite.Play("idle");
+
+			// Spawn the spell at the saved position
+			if (DarkMagicScene != null)
+			{
+				var darkMagic = DarkMagicScene.Instantiate<Area2D>();
+				darkMagic.GlobalPosition = queuedSpellPosition;
+				GetParent().AddChild(darkMagic);
+
+				GD.Print("✨ Dark Magic cast at:", queuedSpellPosition);
+			}
+			else
+			{
+				GD.PrintErr("❌ DarkMagicScene not assigned in Inspector.");
+			}
 		}
 	}
 }
