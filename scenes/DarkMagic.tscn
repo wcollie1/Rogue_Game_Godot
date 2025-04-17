@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://drxnjob2lqoar"]
+[gd_scene load_steps=16 format=3 uid="uid://r8v6tcchiqo4"]
 
 [ext_resource type="Texture2D" uid="uid://ha3ko3ahnrw6" path="res://assets/magicspells/DarkBolt/Dark-Bolt2.png" id="1_nhxsa"]
 [ext_resource type="Texture2D" uid="uid://c80xsrawrxl6j" path="res://assets/magicspells/DarkBolt/Dark-Bolt3.png" id="2_3i00k"]
@@ -56,16 +56,16 @@ animations = [{
 }],
 "loop": false,
 "name": &"cast",
-"speed": 14.0
+"speed": 23.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o3ptw"]
-radius = 277.016
+radius = 130.188
 
 [node name="DarkMagic" type="Area2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -58)
+position = Vector2(7, -47)
 scale = Vector2(2.96191, 2.42898)
 sprite_frames = SubResource("SpriteFrames_tfgk1")
 animation = &"cast"
@@ -79,5 +79,5 @@ shape = SubResource("CircleShape2D_o3ptw")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_3i00k")
-pitch_scale = 1.88
+pitch_scale = 2.03
 autoplay = true
