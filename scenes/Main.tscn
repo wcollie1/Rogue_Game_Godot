@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bd8pvqkve8nlr"]
+[gd_scene load_steps=7 format=3 uid="uid://bfaqjgk73d2or"]
 
 [ext_resource type="Texture2D" uid="uid://ddvxj7kbdkg52" path="res://assets/background/texture/TX Tileset Grass.png" id="1_vcsgt"]
 [ext_resource type="AudioStream" uid="uid://ctmyb82yx2hos" path="res://assets/sound/Steel on Steel.mp3" id="2_c01mt"]
 [ext_resource type="PackedScene" uid="uid://x5756b3jb84o" path="res://scenes/Goblin.tscn" id="3_nxtc6"]
-[ext_resource type="PackedScene" uid="uid://cxtxg0rjgweak" path="res://scenes/Wizard.tscn" id="4_jlsqs"]
-[ext_resource type="PackedScene" uid="uid://drxnjob2lqoar" path="res://scenes/DarkMagic.tscn" id="5_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://dk2wecwke0wk" path="res://scenes/Wizard.tscn" id="4_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://r8v6tcchiqo4" path="res://scenes/DarkMagic.tscn" id="5_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://d4cuji5ot8464" path="res://scenes/PauseMenu.tscn" id="6_c01mt"]
 
 [node name="Sprite2D" type="Sprite2D"]
 
@@ -20,8 +21,10 @@ stream = ExtResource("2_c01mt")
 volume_db = -25.743
 autoplay = true
 
+[node name="PauseMenu" parent="Background" instance=ExtResource("6_c01mt")]
+
 [node name="Goblin - Devin" parent="." instance=ExtResource("3_nxtc6")]
-position = Vector2(354, 273)
+position = Vector2(259, 171)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Devin"]
 offset_left = -17.0
@@ -29,9 +32,10 @@ offset_top = -86.0
 offset_right = 23.0
 offset_bottom = -46.0
 text = "𝔇𝔢𝔳𝔦𝔫"
+metadata/_edit_use_anchors_ = true
 
 [node name="Goblin - Jared" parent="." instance=ExtResource("3_nxtc6")]
-position = Vector2(222, 191)
+position = Vector2(189, 239)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Jared"]
 offset_left = -14.0
@@ -41,5 +45,5 @@ offset_bottom = -46.0
 text = "𝔍𝔞𝔯𝔢𝔡"
 
 [node name="Player" parent="." instance=ExtResource("4_jlsqs")]
-position = Vector2(475, 275)
+position = Vector2(187, 480)
 DarkMagicScene = ExtResource("5_q8u5g")
