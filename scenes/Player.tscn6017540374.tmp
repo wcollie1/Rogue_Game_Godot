@@ -188,10 +188,10 @@ height = 74.0
 script = ExtResource("1_mdl7e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1.54, -0.66)
-scale = Vector2(0.18, 0.18)
+position = Vector2(2, -1)
+scale = Vector2(0.19, 0.19)
 sprite_frames = SubResource("SpriteFrames_dbwip")
-animation = &"idle"
+animation = &"attack"
 
 [node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
 zoom = Vector2(4, 4)
@@ -211,4 +211,6 @@ shape = SubResource("CapsuleShape2D_hqtel")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 16)
 
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]

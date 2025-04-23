@@ -7,7 +7,7 @@ public partial class Goblin : CharacterBody2D
 	private Area2D _attackHitbox;
 
 	// Movement-related exports
-	[Export] public float Speed = 60f;
+	[Export] public float Speed = 30f;
 	[Export] public float PatrolTime = 2.0f;
 
 	// Boundaries (to avoid wandering off-screen)
