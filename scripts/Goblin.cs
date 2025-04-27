@@ -7,8 +7,8 @@ public partial class Goblin : CharacterBody2D
 	private Area2D _attackHitbox;
 	private Node2D _player;
 
-	// Movement-related exports (tweak these in editor)
-	[Export] public float Speed = 60f;
+	// Movement-related exports
+	[Export] public float Speed = 30f;
 	[Export] public float PatrolTime = 2.0f;
 
 	// Bounding box for random patrol (so Goblin won’t wander off)

@@ -294,29 +294,27 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yslio"]
-radius = 16.0
-height = 58.0
+radius = 4.0
+height = 14.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bfsfg"]
-radius = 21.0
-height = 52.0
+radius = 8.0
+height = 32.0
 
 [node name="Goblin" type="CharacterBody2D"]
 script = ExtResource("1_yam3x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
-position = Vector2(-1, -33)
-scale = Vector2(1.605, 1.76833)
+position = Vector2(0, -2.935)
+scale = Vector2(0.415, 0.457)
 sprite_frames = SubResource("SpriteFrames_1yj0k")
 animation = &"take_damage"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, -23)
 shape = SubResource("CapsuleShape2D_yslio")
 
 [node name="AttackHitbox" type="Area2D" parent="."]
-position = Vector2(0, -28)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-position = Vector2(0, 3)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bfsfg")
