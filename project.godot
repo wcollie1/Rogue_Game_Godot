@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Tutorial1"
-run/main_scene="uid://bd8pvqkve8nlr"
+run/main_scene="uid://lsq28nex4y0d"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 
 [audio]

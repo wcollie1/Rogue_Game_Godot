@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Sprite2d : CharacterBody2D
+public partial class Player : CharacterBody2D
 {
 	private AnimatedSprite2D animatedSprite;
 	private bool isAttacking = false;
