@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://cxtxg0rjgweak"]
 
-[ext_resource type="Script" uid="uid://bnk1ts0lgg5ys" path="res://scripts/player.gd" id="1_mdl7e"]
+[ext_resource type="Script" uid="uid://b0fj6qm1rs7xj" path="res://scripts/Player.cs" id="1_mdl7e"]
 [ext_resource type="Texture2D" uid="uid://doch6pmvqkf43" path="res://assets/wizard/Attack1.png" id="2_qu4a1"]
 [ext_resource type="Texture2D" uid="uid://byqc4djye0tli" path="res://assets/wizard/Idle.png" id="3_70d11"]
 [ext_resource type="Texture2D" uid="uid://bwk86lgoi1867" path="res://assets/wizard/Run.png" id="4_cw2d6"]
@@ -197,7 +197,9 @@ animation = &"idle"
 zoom = Vector2(4, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_mdl7e")
+position = Vector2(3, -45)
+scale = Vector2(1.24, 2.2674)
+shape = SubResource("CircleShape2D_mdl7e")
 
 [node name="DetectionArea" type="Area2D" parent="." groups=["Player"]]
 visible = false

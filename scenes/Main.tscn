@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://lsq28nex4y0d"]
+
+[ext_resource type="Script" uid="uid://xqfvhg0wapf5" path="res://scenes/game_manager.gd" id="1_vcsgt"]
+[ext_resource type="Texture2D" uid="uid://ddvxj7kbdkg52" path="res://assets/background/texture/TX Tileset Grass.png" id="2_c01mt"]
+[ext_resource type="AudioStream" uid="uid://ctmyb82yx2hos" path="res://assets/sound/Steel on Steel.mp3" id="3_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://cxtxg0rjgweak" path="res://scenes/Player.tscn" id="4_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://x5756b3jb84o" path="res://scenes/Goblin.tscn" id="5_q8u5g"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_vcsgt")
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="TxTilesetGrass" type="Sprite2D" parent="Background"]
+position = Vector2(576.625, 324)
+scale = Vector2(4.49707, 2.51563)
+texture = ExtResource("2_c01mt")
+
+[node name="Backgroud Music" type="AudioStreamPlayer" parent="Background/TxTilesetGrass"]
+stream = ExtResource("3_nxtc6")
+volume_db = -25.743
+autoplay = true
+
+[node name="Player" parent="." instance=ExtResource("4_jlsqs")]
+position = Vector2(475, 275)
+
+[node name="Goblin - Devin" parent="." groups=["Enemy"] instance=ExtResource("5_q8u5g")]
+position = Vector2(354, 273)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Devin"]
+offset_left = -17.0
+offset_top = -86.0
+offset_right = 23.0
+offset_bottom = -46.0
+text = "𝔇𝔢𝔳𝔦𝔫"
+
+[node name="Goblin - Jared" parent="." groups=["Enemy"] instance=ExtResource("5_q8u5g")]
+position = Vector2(222, 191)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Goblin - Jared"]
+offset_left = -14.0
+offset_top = -86.0
+offset_right = 26.0
+offset_bottom = -46.0
+scale = Vector2(1.00198, 1)
+text = "𝔍𝔞𝔯𝔢𝔡"
+
+[node name="Poo Scraper" parent="." groups=["Enemy"] instance=ExtResource("5_q8u5g")]
+position = Vector2(655, 192)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Poo Scraper"]
+offset_left = -46.0
+offset_top = -81.0
+offset_right = 68.0
+offset_bottom = -54.0
+scale = Vector2(1.00198, 1)
+text = "𝓟𝓸𝓸-𝓢𝓬𝓻𝓪𝓹𝓮𝓻"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 3
