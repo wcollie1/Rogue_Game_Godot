@@ -304,11 +304,11 @@ height = 32.0
 [node name="Goblin" type="CharacterBody2D"]
 script = ExtResource("1_yam3x")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
 position = Vector2(0, -2.935)
 scale = Vector2(0.415, 0.457)
 sprite_frames = SubResource("SpriteFrames_1yj0k")
-animation = &"run"
+animation = &"take_damage"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yslio")
