@@ -194,7 +194,7 @@ sprite_frames = SubResource("SpriteFrames_dbwip")
 animation = &"attack"
 
 [node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mdl7e")
