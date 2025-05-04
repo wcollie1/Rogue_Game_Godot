@@ -7,7 +7,7 @@ class_name Player extends CharacterBody2D
 
 const tile_size: Vector2 = Vector2(16,16)
 var sprite_node_pos_tween: Tween
-
+var player_direction_check
 
 #Additional Variables for Click Based Movement
 var astar_grid: AStarGrid2D
@@ -51,6 +51,12 @@ func _physics_process(_delta: float) -> void:
 				current_id_path.pop_front()
 				if current_id_path.is_empty() == false:
 					target_position = tile_map.map_to_local(current_id_path.front())
+					#Check Direction and Flip Sprite Accordingly
+					player_direction_check = global_position.x - target_position.x
+					if player_direction_check > 0:
+						animatedSprite.flip_h = true
+					elif player_direction_check < 0:
+						animatedSprite.flip_h = false
 				else:
 					is_moving = false
 		
