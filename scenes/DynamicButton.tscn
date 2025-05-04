@@ -1,0 +1,116 @@
+[gd_scene load_steps=10 format=3 uid="uid://bbq7jxyjatxcf"]
+
+[ext_resource type="Texture2D" uid="uid://olx6kf8o8rpk" path="res://assets/GUI/RPG UI pack - Demo (by Franuka)/DefaultButton.png" id="1_4dd5r"]
+[ext_resource type="Texture2D" uid="uid://dj7nejdxn13i4" path="res://assets/GUI/RPG UI pack - Demo (by Franuka)/PressedButton.png" id="2_2sl7e"]
+[ext_resource type="Texture2D" uid="uid://3p0r8mwvydsj" path="res://assets/GUI/RPG UI pack - Demo (by Franuka)/HoverButton.png" id="3_p67it"]
+[ext_resource type="FontFile" uid="uid://divhyvts3pg1t" path="res://assets/fonts/OldeTome.ttf" id="3_u6qls"]
+[ext_resource type="Script" uid="uid://bhjvjq0sqdro4" path="res://scripts/HoverButton.cs" id="4_pnu4b"]
+
+[sub_resource type="Animation" id="Animation_p67it"]
+resource_name = "HoverMove"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 0.535887),
+"update": 0,
+"values": [Vector2(6, -2), Vector2(8.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pnu4b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5.67584, -1.76521)]
+}
+
+[sub_resource type="Animation" id="Animation_p4hsr"]
+resource_name = "HoverOut"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(0.535887, 1),
+"update": 0,
+"values": [Vector2(8.8, 0), Vector2(6, -2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p4hsr"]
+_data = {
+&"HoverIn": SubResource("Animation_p67it"),
+&"HoverOut": SubResource("Animation_p4hsr"),
+&"RESET": SubResource("Animation_pnu4b")
+}
+
+[node name="DynamicButton" type="Control"]
+layout_mode = 3
+anchor_left = -0.059
+anchor_top = -0.033
+anchor_right = -0.003
+offset_left = 596.968
+offset_top = 231.384
+offset_right = 532.456
+offset_bottom = 210.0
+scale = Vector2(7.53091, 9.18305)
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.495118, 0.505759)
+size_flags_stretch_ratio = 0.0
+texture_normal = ExtResource("1_4dd5r")
+texture_pressed = ExtResource("2_2sl7e")
+texture_hover = ExtResource("3_p67it")
+script = ExtResource("4_pnu4b")
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.082992
+anchor_top = 0.118376
+anchor_right = 0.998992
+anchor_bottom = 0.791376
+offset_left = -2.81888
+offset_top = -5.56367
+offset_right = -53.0589
+offset_bottom = -0.194675
+scale = Vector2(1.644, 1.13437)
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_u6qls")
+theme_override_font_sizes/normal_font_size = 20
+text = "Resume"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HoverMove" type="AnimationPlayer" parent="TextureButton"]
+libraries = {
+&"": SubResource("AnimationLibrary_p4hsr")
+}
+
+[connection signal="mouse_entered" from="TextureButton" to="TextureButton" method="_on_TextureButton_mouse_entered"]
+[connection signal="mouse_exited" from="TextureButton" to="TextureButton" method="_on_TextureButton_mouse_exited"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4cuji5ot8464"]
+
+[ext_resource type="Script" uid="uid://unbkgo8nfge3" path="res://scripts/PauseMenu.cs" id="1_jvnd5"]
+[ext_resource type="Texture2D" uid="uid://cn3wihva01bp7" path="res://assets/GUI/RPG UI pack - Demo (by Franuka)/MenuBackground.png" id="2_komsw"]
+[ext_resource type="PackedScene" uid="uid://bbq7jxyjatxcf" path="res://scenes/DynamicButton.tscn" id="3_5w6ei"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_jvnd5")
+
+[node name="MenuGroup" type="CanvasGroup" parent="."]
+position = Vector2(712, 8)
+scale = Vector2(2.60341, 2.7503)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MenuGroup"]
+offset_right = 173.0
+offset_bottom = 214.0
+scale = Vector2(0.877396, 0.786246)
+texture = ExtResource("2_komsw")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuGroup"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.48608, 1.63635)
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="DynamicButton" parent="MenuGroup/VBoxContainer" instance=ExtResource("3_5w6ei")]
+layout_mode = 2
+
+[node name="DynamicButton2" parent="MenuGroup/VBoxContainer" instance=ExtResource("3_5w6ei")]
+layout_mode = 2
+
+[node name="RichTextLabel" parent="MenuGroup/VBoxContainer/DynamicButton2/TextureButton" index="0"]
+text = "Settings
+"
+
+[node name="DynamicButton3" parent="MenuGroup/VBoxContainer" instance=ExtResource("3_5w6ei")]
+layout_mode = 2
+
+[node name="RichTextLabel" parent="MenuGroup/VBoxContainer/DynamicButton3/TextureButton" index="0"]
+text = "Quit
+"
+
+[editable path="MenuGroup/VBoxContainer/DynamicButton2"]
+[editable path="MenuGroup/VBoxContainer/DynamicButton3"]

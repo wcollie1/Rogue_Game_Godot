@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://cxtxg0rjgweak"]
 
-[ext_resource type="Script" uid="uid://b0fj6qm1rs7xj" path="res://scripts/Sprite2d.cs" id="1_mdl7e"]
+[ext_resource type="Script" uid="uid://bnk1ts0lgg5ys" path="res://scripts/player.gd" id="1_mdl7e"]
 [ext_resource type="Texture2D" uid="uid://doch6pmvqkf43" path="res://assets/wizard/Attack1.png" id="2_qu4a1"]
 [ext_resource type="Texture2D" uid="uid://byqc4djye0tli" path="res://assets/wizard/Idle.png" id="3_70d11"]
 [ext_resource type="Texture2D" uid="uid://bwk86lgoi1867" path="res://assets/wizard/Run.png" id="4_cw2d6"]
@@ -174,11 +174,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 11.0
+"speed": 20.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
-radius = 17.0294
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdl7e"]
+size = Vector2(16, 16)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqtel"]
 radius = 17.0
@@ -188,14 +188,16 @@ height = 74.0
 script = ExtResource("1_mdl7e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(12, -51)
-scale = Vector2(1.24301, 1.08203)
+position = Vector2(2, -1)
+scale = Vector2(0.19, 0.19)
 sprite_frames = SubResource("SpriteFrames_dbwip")
-animation = &"idle"
+animation = &"attack"
+
+[node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
+zoom = Vector2(4, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -58)
-shape = SubResource("CircleShape2D_mdl7e")
+shape = SubResource("RectangleShape2D_mdl7e")
 
 [node name="DetectionArea" type="Area2D" parent="." groups=["Player"]]
 visible = false
@@ -206,4 +208,9 @@ visible = false
 position = Vector2(2, -3)
 shape = SubResource("CapsuleShape2D_hqtel")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 16)
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]

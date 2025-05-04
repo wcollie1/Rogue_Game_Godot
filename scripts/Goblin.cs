@@ -5,101 +5,108 @@ public partial class Goblin : CharacterBody2D
 {
 	private AnimatedSprite2D _animatedSprite;
 	private Area2D _attackHitbox;
+	private Node2D _player;
 
 	// Movement-related exports
-	[Export] public float Speed = 60f;
+	[Export] public float Speed = 30f;
 	[Export] public float PatrolTime = 2.0f;
 
-	// Boundaries (to avoid wandering off-screen)
+	// Bounding box for random patrol (so Goblin won’t wander off)
 	[Export] public float MinX = 0f;
 	[Export] public float MaxX = 1024f;
 	[Export] public float MinY = 0f;
 	[Export] public float MaxY = 600f;
 
-	// Internal variables
-	private Vector2 _direction = Vector2.Zero;
+	// Goblin health system
+	[Export] public int MaxHealth = 3; // Dies after 3 hits
+	private int _currentHealth;
+
+	// Internal state
 	private bool _isAttacking = false;
 	private bool _isIdle = false;
+	private bool _isTakingDamage = false;
+	private bool _isDead = false;
+	private bool _chasePlayer = false;
 
-	// Patrol/idle timers
+	// Timers
 	private float _patrolTimer = 0f;
 	private float _idleTimer = 0f;
 	private float _idleDuration = 0f;
 
-	// Chase state
-	private bool _chasePlayer = false;
+	// Chasing logic
 	private float _chaseTimer = 0f;
-	private float _chaseSpeedBuff = 1.5f;  // +50% speed
-	private Node2D _player;               // Reference to player that triggered the hitbox
+	private float _chaseSpeedBuff = 1.5f;  // 50% speed bonus
+
+	// Current movement direction
+	private Vector2 _direction = Vector2.Zero;
 
 	public override void _Ready()
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_attackHitbox = GetNode<Area2D>("AttackHitbox");
 
-		// Always monitor so we can detect the player entering
+		// Enable hit detection for the Goblin’s AttackHitbox
 		_attackHitbox.Monitoring = true;
 		_attackHitbox.AreaEntered += OnAttackHitboxAreaEntered;
 
-		GD.Print("Goblin ready");
+		_currentHealth = MaxHealth;
 
 		GD.Randomize();
 		PickRandomDirection();
+
+		GD.Print("Goblin is ready with MaxHealth=", MaxHealth);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// If attacking, face the player (if known) and do nothing else
+		// If dead or in the middle of “take_damage”, do nothing else.
+		if (_isDead || _isTakingDamage)
+		{
+			return;
+		}
+
+		// If attacking, face the player but skip normal movement
 		if (_isAttacking)
 		{
 			FacePlayerIfKnown();
-			// Reset run animation speed if we’re attacking
-			_animatedSprite.SpeedScale = 1.0f;
 			return;
 		}
 
 		// If chasing
 		if (_chasePlayer)
 		{
-			// Speed up run animation by 50%
+			// Speed up run animation while chasing
 			_animatedSprite.SpeedScale = 1.5f;
 
-			// Count down the chase timer
 			_chaseTimer -= (float)delta;
 			if (_chaseTimer <= 0f)
 			{
-				// End chase mode
+				// Stop chasing, reset to normal
 				_chasePlayer = false;
-				// Reset patrol logic
 				_patrolTimer = 0f;
+				_animatedSprite.SpeedScale = 1.0f; // reset anim speed
 			}
 			else
 			{
-				// Move towards the player’s position
+				// Move toward the player
 				if (_player != null && _player.IsInsideTree())
 				{
 					_direction = (_player.GlobalPosition - GlobalPosition).Normalized();
 				}
 
-				// Apply 50% speed buff
+				// Move with speed buff
 				Vector2 velocity = _direction * Speed * _chaseSpeedBuff;
 				Velocity = velocity;
 				MoveAndSlide();
 
-				// Clamp to bounds but DO NOT invert direction (avoids flipping bug)
+				// Clamp but don’t bounce in chase mode (avoids rapid flip at edges)
 				ClampToBounds(doBounce: false);
 
-				// Flip horizontally if needed
-				_animatedSprite.FlipH = (_direction.X < 0);
-
-				// Play run animation
+				FacePlayerIfKnown();
 				_animatedSprite.Play("run");
 				return;
 			}
 		}
-
-		// If not chasing, reset run animation speed to normal
-		_animatedSprite.SpeedScale = 1.0f;
 
 		// If idle
 		if (_isIdle)
@@ -108,7 +115,6 @@ public partial class Goblin : CharacterBody2D
 			_idleTimer += (float)delta;
 			if (_idleTimer >= _idleDuration)
 			{
-				// Done idling, go back to patrol
 				_isIdle = false;
 				_idleTimer = 0f;
 				_patrolTimer = 0f;
@@ -116,12 +122,12 @@ public partial class Goblin : CharacterBody2D
 			return;
 		}
 
-		// Otherwise, do normal patrol
+		// Otherwise, do normal patrol (random direction)
 		_patrolTimer += (float)delta;
 		if (_patrolTimer >= PatrolTime)
 		{
 			_patrolTimer = 0f;
-			// Random chance to idle
+			// 30% chance to idle
 			if (GD.Randf() < 0.3f)
 			{
 				_isIdle = true;
@@ -130,79 +136,116 @@ public partial class Goblin : CharacterBody2D
 			}
 			else
 			{
-				// Pick a new random direction
 				PickRandomDirection();
 			}
 		}
 
-		Vector2 patrolVelocity = _direction * Speed;
-		Velocity = patrolVelocity;
+		Vector2 patrolVel = _direction * Speed;
+		Velocity = patrolVel;
 		MoveAndSlide();
 
-		// Clamp with bounces in normal patrol mode
+		// Bounce if hitting boundary
 		ClampToBounds(doBounce: true);
 
-		// Flip sprite horizontally if walking left
+		// Flip horizontally if going left
 		_animatedSprite.FlipH = (_direction.X < 0);
 
-		// Play run animation
+		// Normal running
+		_animatedSprite.SpeedScale = 1.0f;
 		_animatedSprite.Play("run");
 	}
 
 	/// <summary>
-	/// Called when the player enters the Goblin’s hitbox.
+	/// If the Player enters the Goblin’s AttackHitbox, chase them & do an attack.
 	/// </summary>
 	private void OnAttackHitboxAreaEntered(Area2D area)
 	{
 		if (area.IsInGroup("Player"))
 		{
 			GD.Print("Player hit by Goblin!");
-
-			// Store the player so we can chase them
 			_player = (Node2D)area;
 
-			// Start chasing with a speed boost for 5 seconds
+			// Start chase with 5s timer
 			_chasePlayer = true;
 			_chaseTimer = 5f;
 
-			// Immediately do an attack if not already attacking
+			// Attack if not already
 			if (!_isAttacking)
 				StartAttack();
 		}
 	}
 
 	/// <summary>
-	/// Randomly choose attack1 or attack2, face the player, play the animation, then reset.
+	/// Randomly choose attack1 or attack2, face the player, then resume.
 	/// </summary>
 	private async void StartAttack()
 	{
+		if (_isDead) return; // do not attack if dead
+
 		_isAttacking = true;
-
-		// 50/50 chance to pick attack1 or attack2
-		string chosenAttack = (GD.Randi() % 2 == 0) ? "attack1" : "attack2";
-		GD.Print($"Start Attack! Anim: {chosenAttack}");
-
-		// Face the player
 		FacePlayerIfKnown();
 
-		// Play the chosen animation
+		// 50/50 chance for attack1 or attack2
+		string chosenAttack = (GD.Randi() % 2 == 0) ? "attack1" : "attack2";
 		_animatedSprite.Play(chosenAttack);
+		GD.Print($"Goblin uses {chosenAttack}");
 
-		// Wait for the animation to finish
+		// Wait for anim
 		await ToSignal(_animatedSprite, AnimatedSprite2D.SignalName.AnimationFinished);
 
 		_isAttacking = false;
 	}
 
 	/// <summary>
-	/// If we know the player’s location, flip sprite to face them horizontally.
+	/// Called by spells, bullets, etc. Subtract HP, play “take_damage” or “death” anim.
 	/// </summary>
-private void FacePlayerIfKnown()
-{
+	public async void TakeDamage(int damageAmount)
+	{
+		if (_isDead)
+			return; // Already dead? Do nothing.
 
-}
+		_currentHealth -= damageAmount;
+		GD.Print($"Goblin took {damageAmount} damage; HP now {_currentHealth}");
+
+		if (_currentHealth <= 0)
+		{
+			_isDead = true;
+			_animatedSprite.Play("death");
+			GD.Print("Goblin is dead. Playing 'death' animation...");
+
+			// Wait for the death anim to finish, then remove from scene
+			await ToSignal(_animatedSprite, AnimatedSprite2D.SignalName.AnimationFinished);
+			QueueFree();
+		}
+		else
+		{
+			// Show “take_damage” anim
+			_isTakingDamage = true;
+			_animatedSprite.Play("take_damage");
+
+			// Wait for that anim, then go back
+			await ToSignal(_animatedSprite, AnimatedSprite2D.SignalName.AnimationFinished);
+			_isTakingDamage = false;
+		}
+	}
+
 	/// <summary>
-	/// Choose a new random direction in 360 degrees for wandering.
+	/// Face the player horizontally (skip flipping if X difference is tiny).
+	/// </summary>
+	private void FacePlayerIfKnown()
+	{
+		if (_player != null && _player.IsInsideTree())
+		{
+			Vector2 toPlayer = _player.GlobalPosition - GlobalPosition;
+			if (Mathf.Abs(toPlayer.X) > 0.1f)
+			{
+				_animatedSprite.FlipH = (toPlayer.X < 0);
+			}
+		}
+	}
+
+	/// <summary>
+	/// Pick a new random direction for patrol (360 degrees).
 	/// </summary>
 	private void PickRandomDirection()
 	{
@@ -211,9 +254,7 @@ private void FacePlayerIfKnown()
 	}
 
 	/// <summary>
-	/// Clamps the Goblin’s position to MinX/MaxX/MinY/MaxY.
-	/// If doBounce == true and we hit a boundary, invert that axis so we bounce.
-	/// If doBounce == false, we only clamp position (useful for chasing).
+	/// Clamps the Goblin’s position to the area; if doBounce is true, invert direction on edges.
 	/// </summary>
 	private void ClampToBounds(bool doBounce)
 	{
@@ -221,31 +262,14 @@ private void FacePlayerIfKnown()
 		bool hitX = false;
 		bool hitY = false;
 
-		if (clamped.X < MinX)
-		{
-			clamped.X = MinX;
-			hitX = true;
-		}
-		else if (clamped.X > MaxX)
-		{
-			clamped.X = MaxX;
-			hitX = true;
-		}
+		if (clamped.X < MinX) { clamped.X = MinX; hitX = true; }
+		else if (clamped.X > MaxX) { clamped.X = MaxX; hitX = true; }
 
-		if (clamped.Y < MinY)
-		{
-			clamped.Y = MinY;
-			hitY = true;
-		}
-		else if (clamped.Y > MaxY)
-		{
-			clamped.Y = MaxY;
-			hitY = true;
-		}
+		if (clamped.Y < MinY) { clamped.Y = MinY; hitY = true; }
+		else if (clamped.Y > MaxY) { clamped.Y = MaxY; hitY = true; }
 
 		GlobalPosition = clamped;
 
-		// Only bounce if doBounce is true
 		if (doBounce)
 		{
 			if (hitX) _direction.X = -_direction.X;
